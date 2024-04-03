@@ -1,10 +1,9 @@
 import quizCompleteImage from "../assets/quiz-complete.png";
-import QUESTIONS from "../questions";
 
-export default function Summary({ userAnswers }) {
+export default function Summary({ userQuestions, userAnswers }) {
   const skippedAnswers = userAnswers.filter((answer) => answer === null).length;
   const correctAnswers = userAnswers.filter(
-    (answer, index) => answer === QUESTIONS[index].answers[0]
+    (answer, index) => answer === userQuestions[index].answers[0]
   ).length;
   const wrongAnswers = userAnswers.length - (skippedAnswers + correctAnswers);
 
@@ -38,7 +37,7 @@ export default function Summary({ userAnswers }) {
       </div>
       <ol>
         {userAnswers.map((answer, index) => {
-          const isAnswerCorrect = answer === QUESTIONS[index].answers[0];
+          const isAnswerCorrect = answer === userQuestions[index].answers[0];
 
           let cssClass = "user-answer";
           if (answer === null) {
@@ -52,11 +51,11 @@ export default function Summary({ userAnswers }) {
           return (
             <li key={index}>
               <h3>{index + 1}</h3>
-              <p className="question">{QUESTIONS[index].text}</p>
+              <p className="question">{userQuestions[index].text}</p>
               <p className={cssClass}>{answer ?? "Skipped!"}</p>
               {!isAnswerCorrect && (
                 <p className="user-answer">
-                  Correct Answer: {QUESTIONS[index].answers[0]}
+                  Correct Answer: {userQuestions[index].answers[0]}
                 </p>
               )}
             </li>
